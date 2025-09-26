@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
+import ClientWrapper from "@/components/providers/ClientWrapper";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
+import DashboardHeader from "@/components/DashboardHeader";
+import { Separator } from "@/components/ui/separator";
+import { FadeInUp } from "@/components/ui/animate-on-scroll";
+import DashboardFooter from "@/components/DashboardFooter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +30,28 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fafafa] dark:bg-[#171717]`}
+    >
+      <ClientWrapper>
+        <SidebarProvider>
+          <AppSidebar />
+
+          <SidebarInset className="p-2 bg-transparent shadow-none! glassmorphism-scrollbar">
+            <FadeInUp>
+              <DashboardHeader />
+            </FadeInUp>
+            <FadeInUp delay={200} className="h-full">
+              <div className="bg-gradient-to-br from-sky-100 dark:from-neutral-950 via-white dark:via-gray-950 to-sky-100 dark:to-neutral-950 mt-3 md:rounded-xl py-5 px-6 min-h-full md:shadow-xl glassmorphism-scrollbar">
+                <div className="dashboard-container">{children}</div>
+              </div>
+            </FadeInUp>
+            <FadeInUp delay={400}>
+              <DashboardFooter />
+            </FadeInUp>
+          </SidebarInset>
+        </SidebarProvider>
+      </ClientWrapper>
+    </body>
   );
 }

@@ -68,6 +68,7 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+  --chart-6: oklch(58.8% 0.158 241.966);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -119,4 +120,180 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .section-container {
+    @apply w-full mx-auto max-w-7xl px-4 py-6;
+  }
+
+  .dashboard-container {
+    @apply w-full mx-auto max-w-7xl py-4 px-1.5;
+  }
+
+  /* Reusable Glassmorphism Button/Item */
+  .glass-active {
+    @apply backdrop-blur-md transition-all;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 70%, transparent) 0%,
+      color-mix(in oklch, oklch(0.62 0.14 231) 35%, transparent) 100%
+    );
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.62 0.14 231) 35%, transparent);
+    border: 1px solid color-mix(in oklch, white 30%, transparent);
+  }
+
+  .dark .glass-active {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 10%, transparent) 0%,
+      color-mix(in oklch, oklch(0.62 0.14 231) 30%, transparent) 100%
+    );
+    box-shadow: 0 10px 28px color-mix(in oklch, oklch(0.62 0.14 231) 28%, transparent);
+    border: 1px solid color-mix(in oklch, white 18%, transparent);
+  }
+
+  /* Reusable Glassmorphism Hover */
+  .glass-hover {
+    transition: transform 180ms ease, box-shadow 220ms ease,
+      background 220ms ease, border-color 220ms ease, color 120ms ease;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 60%, transparent) 0%,
+      color-mix(in oklch, var(--chart-6) 18%, transparent) 100%
+    );
+    border: 1px solid color-mix(in oklch, white 24%, transparent);
+    /* removed glow for a flatter hover look */
+    backdrop-filter: blur(8px);
+  }
+
+  .glass-hover:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 70%, transparent) 0%,
+      color-mix(in oklch, var(--chart-2) 24%, transparent) 100%
+    );
+    /* no shadow glow on hover */
+    border-color: color-mix(in oklch, white 34%, transparent);
+  }
+
+  .dark .glass-hover {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 8%, transparent) 0%,
+      color-mix(in oklch, var(--chart-2) 12%, transparent) 100%
+    );
+    border: 1px solid color-mix(in oklch, white 14%, transparent);
+    /* no shadow glow */
+    backdrop-filter: blur(10px);
+  }
+
+  .dark .glass-hover:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 12%, transparent) 0%,
+      color-mix(in oklch, var(--chart-2) 20%, transparent) 100%
+    );
+    /* no shadow glow on hover */
+    border-color: color-mix(in oklch, white 20%, transparent);
+  }
+
+  /* Smooth icon/text animation inside hoverable buttons */
+  .glass-hoverable .sidebar-icon,
+  .glass-hoverable .sidebar-label {
+    transition: transform 200ms ease, color 150ms ease, opacity 200ms ease;
+    will-change: transform;
+  }
+
+  /* Hover-only variant to keep default background until hover */
+  .glass-hoverable {
+    transition: transform 180ms ease, box-shadow 220ms ease,
+      background 220ms ease, border-color 220ms ease, color 120ms ease;
+    border: 1px solid transparent;
+    will-change: transform, box-shadow, background;
+  }
+
+  .glass-hoverable:hover {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 70%, transparent) 0%,
+    );
+    border-color: color-mix(in oklch, white 28%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .dark .glass-hoverable:hover {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 10%, transparent) 0%,
+    );
+    border-color: color-mix(in oklch, white 18%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Glassmorphism Custom Scrollbar */
+  .glassmorphism-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .glassmorphism-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Dark mode glassmorphism scrollbar */
+  .dark .glassmorphism-scrollbar {
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  }
+
+  .dark .glassmorphism-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .glassmorphism-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .glassmorphism-scrollbar::-webkit-scrollbar-thumb:active {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.dashboard-heading {
+  @apply text-4xl font-extrabold tracking-tight bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-600 dark:from-neutral-100/90 dark:via-white/90 dark:to-white/80 bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)] pb-1;
+}
+
+.dashboard-subheading {
+  @apply pt-1 max-w-[24rem] lg:max-w-[500px] text-neutral-700 dark:text-neutral-300 text-sm md:text-base;
 }
