@@ -1,6 +1,6 @@
-import { getTemporaryAccessToken } from "@/lib/actions/getTemporaryAccessToken";
 import { SchematicEmbed as SchematicEmbedComponent } from "@schematichq/schematic-components";
 import SchematicEmbed from "./SchematicEmbed";
+import { getTemporaryAccessToken } from "@/lib/getTemporaryAccessToken";
 
 async function SchematicComponent({ componentId }: { componentId: string }) {
   if (!componentId) {

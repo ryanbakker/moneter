@@ -9,7 +9,7 @@ import { FadeInUp } from "./ui/animate-on-scroll";
 function DashboardFooter() {
   return (
     <footer className="w-full mx-auto flex flex-row items-center justify-between bg-[#fcfcfc] dark:bg-neutral-950 md:rounded-xl py-3 px-5 md:shadow-lg mt-6">
-      <div className="max-w-7xl flex flex-row items-center justify-between w-full mx-auto">
+      <div className="max-w-7xl flex flex-col md:flex-row items-center justify-between w-full mx-auto">
         <p className="text-sm flex flex-row items-center gap-2">
           © Moneter 2025 &nbsp; | &nbsp; Made with{" "}
           <Heart
@@ -19,7 +19,7 @@ function DashboardFooter() {
         </p>
 
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <ul className="flex items-center gap-4">
+          <ul className="flex flex-col md:flex-row mt-5 md:mt-0 items-center gap-4">
             <li>
               <Link
                 href="/manage-plan"

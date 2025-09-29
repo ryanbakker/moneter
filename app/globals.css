@@ -63,12 +63,22 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-1: oklch(51.1% 0.262 276.966);
+  --chart-2: oklch(58.8% 0.158 241.966);
+  --chart-3: oklch(60% 0.118 184.704);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --chart-6: oklch(58.8% 0.158 241.966);
+  /* Categories: smooth indigo -> teal -> sky with increasing lightness */
+  --chart-category-1: oklch(30% 0.20 270);
+  --chart-category-2: oklch(38% 0.20 265);
+  --chart-category-3: oklch(46% 0.20 258);
+  --chart-category-4: oklch(54% 0.20 200);
+  --chart-category-5: oklch(60% 0.19 190);
+  --chart-category-6: oklch(66% 0.18 180);
+  --chart-category-7: oklch(74% 0.16 220);
+  --chart-category-8: oklch(82% 0.12 232);
+  --chart-category-9: oklch(88% 0.10 240);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -98,11 +108,21 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --chart-1: oklch(51.1% 0.262 276.966);
+  --chart-2: oklch(58.8% 0.158 241.966);
+  --chart-3: oklch(60% 0.118 184.704);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  /* Categories (dark): invert lightness for contrast, same hue path */
+  --chart-category-1: oklch(92% 0.06 240);
+  --chart-category-2: oklch(86% 0.08 232);
+  --chart-category-3: oklch(78% 0.11 220);
+  --chart-category-4: oklch(70% 0.15 180);
+  --chart-category-5: oklch(62% 0.17 190);
+  --chart-category-6: oklch(56% 0.18 200);
+  --chart-category-7: oklch(48% 0.20 258);
+  --chart-category-8: oklch(40% 0.20 265);
+  --chart-category-9: oklch(34% 0.20 270);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -120,9 +140,25 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  :root {
+    --chart-1: oklch(51.1% 0.262 276.966);
+    --chart-2: oklch(58.8% 0.158 241.966);
+    --chart-3: oklch(60% 0.118 184.704);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+  }
+ 
+  .dark {
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+  }
 }
 
-@layer components {
+
   .section-container {
     @apply w-full mx-auto max-w-7xl px-4 py-6;
   }
@@ -133,30 +169,58 @@
 
   /* Reusable Glassmorphism Button/Item */
   .glass-active {
-    @apply backdrop-blur-md transition-all;
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, white 70%, transparent) 0%,
-      color-mix(in oklch, oklch(0.62 0.14 231) 35%, transparent) 100%
-    );
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.62 0.14 231) 35%, transparent);
-    border: 1px solid color-mix(in oklch, white 30%, transparent);
+    @apply transition-all;
+    background:
+      radial-gradient(
+        circle at 20% 80%,
+        color-mix(in oklch, oklch(0.62 0.14 231) 10%, transparent) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 55%, transparent) 0%,
+        color-mix(in oklch, white 35%, transparent) 50%,
+        color-mix(in oklch, white 45%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 18%, transparent);
+    backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      0 6px 20px color-mix(in oklch, oklch(0.145 0 0) 10%, transparent),
+      0 0 0 1px color-mix(in oklch, white 20%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 45%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.145 0 0) 6%, transparent);
   }
 
   .dark .glass-active {
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, white 10%, transparent) 0%,
-      color-mix(in oklch, oklch(0.62 0.14 231) 30%, transparent) 100%
-    );
-    box-shadow: 0 10px 28px color-mix(in oklch, oklch(0.62 0.14 231) 28%, transparent);
-    border: 1px solid color-mix(in oklch, white 18%, transparent);
+    background:
+      radial-gradient(
+        circle at 22% 78%,
+        color-mix(in oklch, oklch(0.488 0.243 264) 12%, transparent) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 12%, transparent) 0%,
+        color-mix(in oklch, white 8%, transparent) 50%,
+        color-mix(in oklch, white 10%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 24%, transparent);
+    backdrop-filter: blur(18px) saturate(200%);
+    box-shadow:
+      0 10px 28px color-mix(in oklch, oklch(0.985 0 0) 8%, transparent),
+      0 0 0 1px color-mix(in oklch, white 14%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 28%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.985 0 0) 5%, transparent);
   }
 
   /* Reusable Glassmorphism Hover */
   .glass-hover {
-    transition: transform 180ms ease, box-shadow 220ms ease,
-      background 220ms ease, border-color 220ms ease, color 120ms ease;
+    transition:
+      transform 180ms ease,
+      box-shadow 220ms ease,
+      background 220ms ease,
+      border-color 220ms ease,
+      color 120ms ease;
     background: linear-gradient(
       135deg,
       color-mix(in oklch, white 60%, transparent) 0%,
@@ -203,32 +267,33 @@
   /* Smooth icon/text animation inside hoverable buttons */
   .glass-hoverable .sidebar-icon,
   .glass-hoverable .sidebar-label {
-    transition: transform 200ms ease, color 150ms ease, opacity 200ms ease;
+    transition:
+      transform 200ms ease,
+      color 150ms ease,
+      opacity 200ms ease;
     will-change: transform;
   }
 
   /* Hover-only variant to keep default background until hover */
   .glass-hoverable {
-    transition: transform 180ms ease, box-shadow 220ms ease,
-      background 220ms ease, border-color 220ms ease, color 120ms ease;
+    transition:
+      transform 180ms ease,
+      box-shadow 220ms ease,
+      background 220ms ease,
+      border-color 220ms ease,
+      color 120ms ease;
     border: 1px solid transparent;
     will-change: transform, box-shadow, background;
   }
 
   .glass-hoverable:hover {
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, white 70%, transparent) 0%,
-    );
+    background: linear-gradient(135deg, color-mix(in oklch, white 70%, transparent) 0%);
     border-color: color-mix(in oklch, white 28%, transparent);
     backdrop-filter: blur(8px);
   }
 
   .dark .glass-hoverable:hover {
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, white 10%, transparent) 0%,
-    );
+    background: linear-gradient(135deg, color-mix(in oklch, white 10%, transparent) 0%);
     border-color: color-mix(in oklch, white 18%, transparent);
     backdrop-filter: blur(10px);
   }
@@ -288,12 +353,359 @@
   .dark .glassmorphism-scrollbar::-webkit-scrollbar-thumb:active {
     background: rgba(0, 0, 0, 0.5);
   }
-}
 
-.dashboard-heading {
-  @apply text-4xl font-extrabold tracking-tight bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-600 dark:from-neutral-100/90 dark:via-white/90 dark:to-white/80 bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)] pb-1;
-}
+  .dashboard-card {
+    @apply h-full w-full min-h-[150px] px-5 py-4 cursor-pointer flex flex-col gap-3 relative overflow-hidden rounded-2xl border transition-all duration-300;
+    background: radial-gradient(
+        circle at 20% 80%,
+        color-mix(in oklch, oklch(0.62 0.14 231) 10%, transparent) 0%,
+        transparent 50%
+      ),
+      radial-gradient(circle at 80% 20%, color-mix(in oklch, oklch(0.6 0.118 184) 3%, transparent) 0%, transparent 50%),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 35%, transparent) 0%,
+        color-mix(in oklch, white 20%, transparent) 50%,
+        color-mix(in oklch, white 25%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 20%, transparent);
+    backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+      0 8px 32px color-mix(in oklch, oklch(0.145 0 0) 12%, transparent),
+      0 0 0 1px color-mix(in oklch, white 20%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 50%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.145 0 0) 8%, transparent);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-.dashboard-subheading {
-  @apply pt-1 max-w-[24rem] lg:max-w-[500px] text-neutral-700 dark:text-neutral-300 text-sm md:text-base;
-}
+  .dashboard-card::before {
+    @apply absolute inset-0 rounded-md opacity-0 transition-opacity duration-300 ease-out;
+    content: "";
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 8%, transparent) 0%,
+      transparent 50%,
+      color-mix(in oklch, oklch(0.62 0.14 231) 5%, transparent) 100%
+    );
+  }
+
+  .dashboard-card:hover {
+    @apply cursor-default;
+  }
+
+  /* .dashboard-card:hover {
+    @apply -translate-y-0.5 scale-[1.005]!;
+    background: radial-gradient(
+        circle at 20% 80%,
+        color-mix(in oklch, oklch(0.62 0.14 231) 20%, transparent) 0%,
+        transparent 50%
+      ),
+      radial-gradient(circle at 80% 20%, color-mix(in oklch, oklch(0.6 0.118 184) 18%, transparent) 0%, transparent 50%),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 45%, transparent) 0%,
+        color-mix(in oklch, white 30%, transparent) 50%,
+        color-mix(in oklch, white 35%, transparent) 100%
+      );
+    border-color: color-mix(in oklch, white 40%, transparent);
+    box-shadow:
+      0 20px 60px color-mix(in oklch, oklch(0.145 0 0) 18%, transparent),
+      0 0 0 1px color-mix(in oklch, white 30%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 60%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.145 0 0) 12%, transparent);
+  }
+
+  .dashboard-card:hover::before {
+    @apply opacity-100;
+  } */
+
+  .dark .dashboard-card {
+    background: radial-gradient(
+        circle at 20% 80%,
+        color-mix(in oklch, oklch(0.488 0.243 264) 12%, transparent) 0%,
+        transparent 50%
+      ),
+      radial-gradient(circle at 80% 20%, color-mix(in oklch, oklch(0.696 0.17 162) 3%, transparent) 0%, transparent 50%),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 15%, transparent) 0%,
+        color-mix(in oklch, white 8%, transparent) 50%,
+        color-mix(in oklch, white 12%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 25%, transparent);
+    backdrop-filter: blur(32px) saturate(220%);
+    box-shadow:
+      0 12px 40px color-mix(in oklch, oklch(0.985 0 0) 8%, transparent),
+      0 0 0 1px color-mix(in oklch, white 15%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 25%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.985 0 0) 6%, transparent);
+  }
+
+  .dark .dashboard-card::before {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 4%, transparent) 0%,
+      transparent 50%,
+      color-mix(in oklch, oklch(0.488 0.243 264) 3%, transparent) 100%
+    );
+  }
+
+  /* Icon container with modern glassmorphism */
+  .dashboard-icon {
+    @apply p-2 rounded-lg backdrop-blur-sm w-fit relative overflow-hidden;
+    background: radial-gradient(
+        circle at 30% 70%,
+        color-mix(in oklch, oklch(0.62 0.14 231) 15%, transparent) 20%,
+        transparent 80%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 25%, transparent) 0%,
+        color-mix(in oklch, white 15%, transparent) 50%,
+        color-mix(in oklch, white 20%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 18%, transparent);
+    box-shadow:
+      0 4px 16px color-mix(in oklch, oklch(0.145 0 0) 8%, transparent),
+      0 0 0 1px color-mix(in oklch, white 15%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 35%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.145 0 0) 6%, transparent);
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dashboard-icon::before {
+    @apply absolute inset-0 rounded-md opacity-0 transition-opacity duration-250 ease-out pointer-events-none;
+    content: "";
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 6%, transparent) 0%,
+      transparent 50%,
+      color-mix(in oklch, oklch(0.62 0.14 231) 3%, transparent) 100%
+    );
+  }
+
+  /* .dashboard-card:hover .dashboard-icon {
+    @apply -translate-y-px scale-105;
+    background: radial-gradient(
+        circle at 30% 70%,
+        color-mix(in oklch, oklch(0.62 0.14 231) 12%, transparent) 0%,
+        transparent 60%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 35%, transparent) 0%,
+        color-mix(in oklch, white 25%, transparent) 50%,
+        color-mix(in oklch, white 30%, transparent) 100%
+      );
+    border-color: color-mix(in oklch, white 35%, transparent);
+    box-shadow:
+      0 6px 24px color-mix(in oklch, oklch(0.145 0 0) 12%, transparent),
+      0 0 0 1px color-mix(in oklch, white 25%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 45%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.145 0 0) 8%, transparent);
+  } */
+
+  .dark .dashboard-icon {
+    background: radial-gradient(
+        circle at 30% 70%,
+        color-mix(in oklch, oklch(0.488 0.243 264) 8%, transparent) 0%,
+        transparent 60%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, white 12%, transparent) 0%,
+        color-mix(in oklch, white 8%, transparent) 50%,
+        color-mix(in oklch, white 10%, transparent) 100%
+      );
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 22%, transparent);
+    backdrop-filter: blur(16px) saturate(180%);
+    box-shadow:
+      0 6px 20px color-mix(in oklch, oklch(0.985 0 0) 6%, transparent),
+      0 0 0 1px color-mix(in oklch, white 12%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.985 0 0) 5%, transparent);
+  }
+
+  .dark .dashboard-icon::before {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, white 3%, transparent) 0%,
+      transparent 50%,
+      color-mix(in oklch, oklch(0.488 0.243 264) 2%, transparent) 100%
+    );
+  }
+
+  /* Modern icon styling */
+  .icon-primary {
+    @apply h-6 w-6 transition-all duration-300 text-indigo-500/90 dark:text-indigo-300/90!;
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.145 0 0) 10%, transparent));
+  }
+
+  .dark .icon-primary {
+    color: color-mix(in oklch, var(--foreground) 85%, transparent);
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.985 0 0) 8%, transparent));
+  }
+
+  /* Modern card content styling */
+  .dashboard-content {
+    @apply text-left relative z-10;
+  }
+
+  .dashboard-label {
+    @apply text-sm font-bold tracking-wide uppercase text-slate-600 transition-all duration-250 ease-out;
+    text-shadow: 0 1px 2px color-mix(in oklch, oklch(0.145 0 0) 8%, transparent);
+  }
+
+  .dashboard-value {
+    @apply text-2xl font-black tracking-tight transition-all duration-250 ease-out leading-tight bg-gradient-to-tr from-slate-800 via-slate-800 to-slate-300 text-transparent bg-clip-text;
+    text-shadow: 0 2px 4px color-mix(in oklch, oklch(0.145 0 0) 12%, transparent);
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.145 0 0) 8%, transparent));
+  }
+
+  .dark .dashboard-label {
+    color: color-mix(in oklch, var(--muted-foreground) 75%, transparent);
+    text-shadow: 0 1px 2px color-mix(in oklch, oklch(0.985 0 0) 6%, transparent);
+  }
+
+  .dark .dashboard-value {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--foreground) 95%, transparent) 0%,
+      color-mix(in oklch, var(--foreground) 90%, transparent) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px color-mix(in oklch, oklch(0.985 0 0) 8%, transparent);
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.985 0 0) 6%, transparent));
+  }
+
+  .dashboard-card:hover .dashboard-label {
+    @apply -translate-y-px;
+    color: color-mix(in oklch, var(--muted-foreground) 90%, transparent);
+  }
+
+  .dashboard-card:hover .dashboard-value {
+    @apply -translate-y-px scale-[1.02];
+    filter: drop-shadow(0 3px 6px color-mix(in oklch, oklch(0.145 0 0) 15%, transparent)) brightness(1.05);
+  }
+
+  .dark .dashboard-card:hover .dashboard-value {
+    filter: drop-shadow(0 3px 6px color-mix(in oklch, oklch(0.985 0 0) 10%, transparent)) brightness(1.05);
+  }
+
+  .dashboard-card span {
+    @apply text-xs opacity-50;
+  }
+  
+  .dashboard-heading {
+    @apply text-4xl font-extrabold tracking-tight bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-600 dark:from-neutral-100/90 dark:via-white/90 dark:to-white/80 bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)] pb-1;
+  }
+  
+  .dashboard-subheading {
+    @apply pt-1 max-w-96 lg:max-w-[500px] text-neutral-700 dark:text-neutral-300 text-sm md:text-base;
+  }
+
+  .dashboard-card-title {
+    @apply text-xl font-extrabold tracking-tight transition-all duration-250 ease-out leading-tight bg-gradient-to-tr from-slate-800 via-slate-800 to-slate-300 text-transparent bg-clip-text;
+    text-shadow: 0 2px 4px color-mix(in oklch, oklch(0.145 0 0) 12%, transparent);
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.145 0 0) 8%, transparent));
+  }
+
+  .dark .dashboard-card-title {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--foreground) 95%, transparent) 0%,
+      color-mix(in oklch, var(--foreground) 90%, transparent) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px color-mix(in oklch, oklch(0.985 0 0) 8%, transparent);
+    filter: drop-shadow(0 1px 2px color-mix(in oklch, oklch(0.985 0 0) 6%, transparent));
+  }
+
+  .dashboard-card-subtitle {
+    @apply text-sm text-muted-foreground mb-2;
+  }
+
+  .dashboard-card-btn {
+    @apply gap-3 w-full sm:w-auto bg-gradient-to-tr from-sky-950 via-sky-900 to-teal-700;
+    backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 15%, transparent);
+    box-shadow: 
+      0 4px 16px color-mix(in oklch, oklch(0.145 0 0) 15%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 30%, transparent);
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dashboard-card-btn:hover {
+    backdrop-filter: blur(16px);
+    border-color: color-mix(in oklch, oklch(0.488 0.243 264) 25%, transparent);
+    box-shadow: 
+      0 8px 24px color-mix(in oklch, oklch(0.145 0 0) 20%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 45%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .dark .dashboard-card-btn {
+    backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid color-mix(in oklch, oklch(0.488 0.243 264) 20%, transparent);
+    box-shadow: 
+      0 6px 20px color-mix(in oklch, oklch(0.985 0 0) 10%, transparent),
+      0 0 0 1px color-mix(in oklch, white 8%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.985 0 0) 4%, transparent);
+  }
+
+  .dark .dashboard-card-btn:hover {
+    backdrop-filter: blur(22px) saturate(180%);
+    border-color: color-mix(in oklch, oklch(0.488 0.243 264) 28%, transparent);
+    box-shadow: 
+      0 10px 28px color-mix(in oklch, oklch(0.985 0 0) 14%, transparent),
+      0 0 0 1px color-mix(in oklch, white 12%, transparent),
+      inset 0 1px 0 color-mix(in oklch, white 30%, transparent),
+      inset 0 -1px 0 color-mix(in oklch, oklch(0.985 0 0) 6%, transparent);
+    transform: translateY(-1px);
+  }
+
+  /* Custom Scrollbar Styles for Goals Summary */
+  .goals-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .goals-scrollbar::-webkit-scrollbar-track {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+  }
+
+  .goals-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.6), rgba(99, 102, 241, 0.8));
+    border-radius: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .goals-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.8), rgba(99, 102, 241, 1));
+    border: 1px solid rgba(99, 102, 241, 0.5);
+  }
+
+  .goals-scrollbar::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, rgba(99, 102, 241, 1), rgba(79, 70, 229, 1));
+  }
+
+  /* Dark mode scrollbar */
+  .dark .goals-scrollbar::-webkit-scrollbar-track {
+    background: rgba(51, 65, 85, 0.3);
+  }
+
+  .dark .goals-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(129, 140, 248, 0.6), rgba(129, 140, 248, 0.8));
+    border: 1px solid rgba(129, 140, 248, 0.3);
+  }
+
+  .dark .goals-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(129, 140, 248, 0.8), rgba(129, 140, 248, 1));
+    border: 1px solid rgba(129, 140, 248, 0.5);
+  }

@@ -23,9 +23,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${notoSans.className} antialiased`}
+      className={`${notoSans.variable} antialiased`}
     >
-      {children}
+      <body className="bg-[#f6f6f6] dark:bg-[#171717]">{children}</body>
     </html>
   );
 }

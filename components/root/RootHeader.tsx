@@ -14,7 +14,7 @@ import { LogIn } from "lucide-react";
 
 function RootHeader() {
   return (
-    <header className="w-full fixed left-0 right-0 top-0 z-[9999] backdrop-blur-xl bg-white/80 dark:bg-neutral-950/70 border-b border-white/20 dark:border-neutral-800/50 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+    <header className="w-full fixed left-0 right-0 top-0 z-[9999] backdrop-blur-xl bg-white/60 dark:bg-neutral-950/60 border-b border-white/20 dark:border-neutral-800/50 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
       <div className="mx-auto max-w-7xl px-4 py-4 flex flex-row justify-between items-center">
         <Logo size="lg" />
 
@@ -46,14 +46,14 @@ function RootHeader() {
                 </SignInButton>
               </SignedOut>
 
-              <div className="hidden md:flex">
+              <div className="hidden md:flex md:flex-row md:items-center md:gap-3">
                 <SignedIn>
                   <Link href="/">
                     <Button>Dashboard</Button>
                   </Link>
                 </SignedIn>
                 <SignedIn>
-                  <Button>
+                  <Button asChild>
                     <SignOutButton>Sign out</SignOutButton>
                   </Button>
                 </SignedIn>

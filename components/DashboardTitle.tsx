@@ -25,7 +25,7 @@ function DashboardTitle({
     : subtitle ?? "";
 
   return (
-    <div>
+    <div className="mb-8">
       <h1 className="dashboard-heading">{effectiveTitle}</h1>
       {effectiveSubtitle ? (
         <h2 className="dashboard-subheading">{effectiveSubtitle}</h2>

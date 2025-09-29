@@ -1,14 +1,14 @@
+import DashboardTitle from "@/components/DashboardTitle";
 import SchematicComponent from "@/components/providers/SchematicComponent";
 
 function ManagePlan() {
   return (
     <div className="page-content">
-      <div className="pb-5">
-        <h1 className="page-title">Plan & Billing</h1>
-        <h2 className="page-sub-title">
-          Manage your Finova subscription and billing details.
-        </h2>
-      </div>
+      <DashboardTitle
+        title="Plan & Billing"
+        subtitle="Manage your Moneter subscription and billing details."
+        hasWelcome={false}
+      />
 
       <SchematicComponent
         componentId={process.env.NEXT_PUBLIC_SCHEMATIC_COMPONENT_ID!}

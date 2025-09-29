@@ -36,6 +36,20 @@ import { useUser, useClerk } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTheme } from "next-themes";
 import { FadeInUp } from "./ui/animate-on-scroll";
+import { getUserEntitlements } from "@/lib/actions/entitlements.actions";
+import { FeatureFlag } from "@/lib/featureFlags";
+
+// Mapping between menu items and their corresponding feature flags
+// Dashboard ("/") is always enabled and not included in this mapping
+const menuItemFeatureMap: Record<string, FeatureFlag> = {
+  "/transactions": FeatureFlag.TRANSACTIONS,
+  "/bills": FeatureFlag.BILLS,
+  "/goals": FeatureFlag.GOALS,
+  "/budgeting": FeatureFlag.BUDGETS,
+  "/assets": FeatureFlag.ASSETS,
+  "/liabilities": FeatureFlag.LIABILITIES,
+  "/reports": FeatureFlag.GENERATE_REPORTS,
+};
 
 // Sidebar Theme Toggle Component
 function SidebarThemeToggle() {
@@ -77,6 +91,35 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { openUserProfile, signOut } = useClerk();
   const pathname = usePathname();
   const { isMobile, setOpenMobile } = useSidebar();
+  const [entitlements, setEntitlements] = useState<
+    Record<
+      string,
+      { success: boolean; error?: string; usage?: number; allocation?: number }
+    >
+  >({});
+  const [entitlementsLoaded, setEntitlementsLoaded] = useState(false);
+
+  // Check user entitlements when user is loaded
+  useEffect(() => {
+    const checkEntitlements = async () => {
+      if (isLoaded && user?.id) {
+        try {
+          const result = await getUserEntitlements(user.id);
+          if (result.success && result.entitlements) {
+            setEntitlements(result.entitlements);
+          } else {
+            console.error("Failed to get entitlements:", result.error);
+          }
+          setEntitlementsLoaded(true);
+        } catch (error) {
+          console.error("Failed to check user entitlements:", error);
+          setEntitlementsLoaded(true);
+        }
+      }
+    };
+
+    checkEntitlements();
+  }, [isLoaded, user?.id]);
 
   const handleNavClick = () => {
     if (isMobile) {
@@ -90,7 +133,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await signOut({ redirectUrl: "/welcome" });
     } catch (_error) {}
   };
 
@@ -146,9 +189,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent className="flex-1 overflow-visible!">
         <SidebarGroup className="flex-1 space-y-1">
           <SidebarMenu className="space-y-1">
-            {isLoaded
+            {isLoaded && entitlementsLoaded
               ? menuItems.map((item, index) => {
                   const isActive = pathname === item.href;
+                  const featureFlag = menuItemFeatureMap[item.href];
+                  // Dashboard is always enabled
+                  const isEntitled =
+                    item.href === "/" ||
+                    (featureFlag ? entitlements[featureFlag]?.success : true);
+                  const isDisabled = !isEntitled;
 
                   return (
                     <FadeInUp delay={400 + index * 150} key={index}>
@@ -157,14 +206,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           asChild
                           className={`h-9 pl-3 pr-3 rounded-md transition-colors ${
                             isActive ? "glass-active" : "glass-hoverable"
+                          } ${
+                            isDisabled ? "opacity-50 cursor-not-allowed" : ""
                           }`}
-                          title={item.title}
-                          disabled={true}
+                          title={
+                            isDisabled
+                              ? "This feature is not available on your current plan"
+                              : item.title
+                          }
+                          disabled={isDisabled}
                         >
                           <Link
-                            href={item.href}
-                            className="flex items-center gap-3"
-                            onClick={handleNavClick}
+                            href={isDisabled ? "#" : item.href}
+                            className="flex items-center gap-3 hover:border! hover:border-gray-200! dark:hover:border-gray-600!"
+                            onClick={
+                              isDisabled
+                                ? (e) => e.preventDefault()
+                                : handleNavClick
+                            }
+                            aria-disabled={isDisabled}
                           >
                             {item.icon === "dashboard" && (
                               <LayoutDashboard className="w-6 h-6 sidebar-icon" />
@@ -200,7 +260,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   );
                 })
               : // Skeleton loaders for menu items
-                Array.from({ length: 5 }).map((_, index) => (
+                Array.from({ length: 8 }).map((_, index) => (
                   <SidebarMenuItem key={index}>
                     <div className="h-9 px-3 rounded-md flex items-center gap-3">
                       <Skeleton className="w-6 h-6 rounded" />

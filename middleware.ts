@@ -12,15 +12,6 @@ export default clerkMiddleware(async (auth, req) => {
   const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip");
 
   try {
-    console.log(`[MIDDLEWARE] Request started`, {
-      pathname,
-      method: req.method,
-      userId: userId || "anonymous",
-      userAgent,
-      ip,
-      timestamp: new Date().toISOString(),
-    });
-
     // Skip authentication checks for webhook routes
     if (isWebhookRoute(req)) {
       console.log(`[MIDDLEWARE] Webhook route - skipping auth`, {
@@ -33,65 +24,38 @@ export default clerkMiddleware(async (auth, req) => {
     // Allow all non-webhook API routes to pass through so route handlers
     // can return JSON (avoids redirects causing Failed to fetch on client)
     if (pathname.startsWith("/api")) {
-      console.log(
-        `[MIDDLEWARE] API route - allowing through for JSON response`,
-        {
-          pathname,
-          userId: userId || "anonymous",
-          timestamp: new Date().toISOString(),
-        }
-      );
+      return NextResponse.next();
+    }
+
+    // Allow Next.js Server Actions POST requests to pass through without redirect
+    // These requests carry a special header and can target any route segment
+    const isServerAction =
+      req.method === "POST" &&
+      (req.headers.get("next-action") ||
+        req.headers.get("next-router-state-tree") ||
+        req.headers.get("content-type")?.includes("multipart/form-data"));
+
+    if (isServerAction) {
       return NextResponse.next();
     }
 
     // If user is not authenticated and trying to access protected routes
     if (!userId && !isPublicRoute(req)) {
-      console.warn(
-        `[MIDDLEWARE] Unauthorized access attempt to protected route`,
-        {
-          pathname,
-          userAgent,
-          ip,
-          timestamp: new Date().toISOString(),
-        }
-      );
       const welcomeUrl = new URL("/welcome", req.url);
       return NextResponse.redirect(welcomeUrl);
     }
 
     // If user is authenticated and trying to access /welcome, redirect to home
     if (userId && pathname === "/welcome") {
-      console.log(
-        `[MIDDLEWARE] Authenticated user accessing welcome - redirecting to home`,
-        {
-          userId,
-          pathname,
-          timestamp: new Date().toISOString(),
-        }
-      );
       const homeUrl = new URL("/", req.url);
       return NextResponse.redirect(homeUrl);
     }
 
     const responseTime = Date.now() - startTime;
-    console.log(`[MIDDLEWARE] Request processed successfully`, {
-      pathname,
-      userId: userId || "anonymous",
-      responseTime: `${responseTime}ms`,
-      timestamp: new Date().toISOString(),
-    });
 
     return NextResponse.next();
   } catch (error) {
     const responseTime = Date.now() - startTime;
-    console.error(`[MIDDLEWARE] Error occurred`, {
-      pathname,
-      userId: userId || "anonymous",
-      error: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
-      responseTime: `${responseTime}ms`,
-      timestamp: new Date().toISOString(),
-    });
 
     // In case of middleware error, allow the request to continue
     // to avoid breaking the application
