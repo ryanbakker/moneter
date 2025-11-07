@@ -1,10 +1,12 @@
 const GetStarted = () => {
   return (
     <section>
-      <h2>Get Started</h2>
-      {/* Headline */}
-      {/* Description */}
-      {/* Get started for free */}
+      <div className="container">
+        <h2>Get Started</h2>
+        {/* Headline */}
+        {/* Description */}
+        {/* Get started for free */}
+      </div>
     </section>
   );
 };
