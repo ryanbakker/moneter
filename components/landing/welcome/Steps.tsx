@@ -1,11 +1,13 @@
 const Steps = () => {
   return (
     <section>
-      <h2>Steps</h2>
-      {/* Sign up */}
-      {/* Add transactions */}
-      {/* Track spending */}
-      {/* Achieve goals */}
+      <div className="container">
+        <h2>Steps</h2>
+        {/* Sign up */}
+        {/* Add transactions */}
+        {/* Track spending */}
+        {/* Achieve goals */}
+      </div>
     </section>
   );
 };

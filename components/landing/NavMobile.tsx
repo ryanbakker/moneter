@@ -9,11 +9,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { Menu } from "lucide-react";
 
 const NavMobile = () => {
   return (
     <Sheet>
-      <SheetTrigger className="visible md:hidden">Open</SheetTrigger>
+      <SheetTrigger className="visible md:hidden" title="Open menu" asChild>
+        <Button variant="outline" size="icon">
+          <Menu />
+        </Button>
+      </SheetTrigger>
       <SheetContent>
         <SheetTitle className="sr-only">Menu</SheetTitle>
         <div className="p-8">

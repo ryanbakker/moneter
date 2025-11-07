@@ -1,9 +1,11 @@
 const Promise = () => {
   return (
     <section>
-      <h2>Promise</h2>
-      {/* Statements */}
-      {/* Link to privacy page */}
+      <div className="container">
+        <h2>Promise</h2>
+        {/* Statements */}
+        {/* Link to privacy page */}
+      </div>
     </section>
   );
 };
