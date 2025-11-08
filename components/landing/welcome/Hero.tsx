@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="relative py-12 min-h-[70vh]">
+    <section className="relative py-12 mb-2">
       <VantaTopology color={0x4338ca} />
 
       <div className="relative z-10 flex flex-col md:flex-row container justify-between md:items-center gap-10 md:gap-5">
@@ -16,7 +16,7 @@ const Hero = () => {
             Finances
           </h1>
 
-          <h2 className="text-white max-w-[610px] text-sm md:text-base pt-2">
+          <h2 className="max-w-[610px] text-sm md:text-base pt-2">
             The first step is knowing your numbers. Our platform helps you track
             and visualise your financial habits. Effectively save and plan for
             your future.
@@ -29,7 +29,7 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 container">
-        <p className="font-extrabold uppercase text-xs text-white/60 pt-14 pb-4">
+        <p className="font-extrabold uppercase text-xs pt-14 pb-4">
           Get started with Moneter
         </p>
 

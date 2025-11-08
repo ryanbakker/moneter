@@ -123,7 +123,7 @@ export default function VantaTopology({
   return (
     <div
       ref={vantaRef}
-      className="w-full min-h-[70vh] -mt-17 absolute -top-30 left-0 z-0 opacity-70"
+      className="w-full min-h-[70vh] -mt-17 absolute -top-30 left-0 z-0 opacity-55 dark:opacity-70"
       style={{ backgroundColor: "transparent" }}
     />
   );
