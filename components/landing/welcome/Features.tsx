@@ -95,7 +95,6 @@ const Features = () => {
           subheading="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet
           reiciendis ut nam temporibus et."
         />
-        <div />
 
         <div className="flex flex-row items-center mt-8 justify-between">
           <div className="flex flex-row items-center justify-between mx-auto max-w-7xl relative z-10">

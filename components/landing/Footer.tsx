@@ -32,7 +32,12 @@ const Footer = () => {
         <ul className="flex flex-row items-center gap-5">
           {LANDING_FOOTER_LINKS.map((link) => (
             <li key={link.label}>
-              <Link href={link.href}>{link.label}</Link>
+              <Link
+                href={link.href}
+                className="text-sm hover:underline transition-all"
+              >
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>

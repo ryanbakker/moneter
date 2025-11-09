@@ -3,7 +3,7 @@ import Heading from "../Heading";
 const GetStarted = () => {
   return (
     <section>
-      <div className="container">
+      <div className="section-container">
         <Heading
           heading="Get Started"
           subheading="Begin your journey in achieving your financial goals today."
