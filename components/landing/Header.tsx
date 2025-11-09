@@ -3,11 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import NavMobile from "./NavMobile";
+import dynamic from "next/dynamic";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "../ui/button";
 import { LogIn } from "lucide-react";
 import NavDesktop from "./NavDesktop";
+
+const NavMobile = dynamic(() => import("./NavMobile"), {
+  ssr: false,
+});
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,10 +30,17 @@ const Header = () => {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-background/40 backdrop-blur-md border-b border-border/65"
+          ? "bg-background/60 backdrop-blur-md border-b border-border/30"
           : "bg-transparent"
       }`}
     >
+      <div
+        className={`${
+          scrolled
+            ? ""
+            : "bg-linear-to-b from-white dark:from-black from-50% to-99% to-transparent w-full h-[260px] absolute left-0 -top-30 -z-5!"
+        }`}
+      />
       <div className="container flex flex-row items-center justify-between">
         <Link href="/welcome">
           <Image

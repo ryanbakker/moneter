@@ -1,8 +1,14 @@
+import Heading from "../Heading";
+
 const AdvancedFeatures = () => {
   return (
     <section>
-      <div className="container">
-        <h2>Advanced Features</h2>
+      <div className="section-container">
+        <Heading
+          heading="Advanced Features"
+          subheading="Features for financial management power users and businesses."
+        />
+
         {/*  */}
         {/* Advacned Features grid */}
       </div>
