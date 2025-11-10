@@ -16,14 +16,15 @@ const Pricing = () => {
       <div className="section-container relative z-10">
         <Heading
           heading="Pricing"
-          subheading="Choose the plan best for you."
+          subheading="Choose the best plan for you."
           light={true}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {PLANS.map((plan) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+          {PLANS.map((plan, index) => {
             const isPremium = plan.label === "Premium";
             const isUltimate = plan.label === "Ultimate";
+            const isFirst = index === 0;
 
             return (
               <div
@@ -32,7 +33,7 @@ const Pricing = () => {
                   isPremium
                     ? "ring-2 ring-indigo-400/50 ring-offset-2 ring-offset-indigo-900/50 shadow-xl shadow-indigo-500/30"
                     : "hover:border-white/30"
-                }`}
+                } ${isFirst ? "sm:col-span-2 md:col-span-1" : ""}`}
               >
                 {/* Gradient overlay for premium */}
                 {isPremium && (

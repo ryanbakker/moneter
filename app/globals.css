@@ -130,3 +130,33 @@
     @apply mx-auto max-w-7xl px-4 py-14 relative z-10;
   }
 }
+
+.nav-link {
+  @apply py-1 font-medium text-indigo-950 dark:text-indigo-50 relative;
+}
+
+.nav-link::after {
+  @apply bg-indigo-950 dark:bg-indigo-100 absolute rounded-full;
+  display: block;
+  content: "";
+  height: 1.5px;
+  width: 100%;
+  bottom: -7px;
+  left: 0;
+  opacity: 0;
+}
+
+.nav-link:hover::after {
+  animation: navLinkAnimation 0.55s forwards;
+}
+
+@keyframes navLinkAnimation {
+  0% {
+    bottom: -7px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0px;
+    opacity: 1;
+  }
+}

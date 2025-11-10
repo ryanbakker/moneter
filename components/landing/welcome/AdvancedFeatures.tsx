@@ -14,7 +14,7 @@ const AdvancedFeatures = () => {
           subheading="Features for financial management power users and businesses."
         />
 
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-7">
           {ADVANCED_FEATURES.map((feat) => {
             const Icon = feat.icon;
             return (
