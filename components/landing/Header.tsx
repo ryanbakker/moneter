@@ -64,7 +64,11 @@ const Header = () => {
           <div className="flex flex-row items-center gap-4">
             <ThemeToggle />
             <Link href="/sign-in" title="Sign in">
-              <Button variant="outline" size="icon" className="block sm:hidden">
+              <Button
+                variant="outline"
+                size="icon"
+                className="flex items-center justify-center sm:hidden pr-0.5"
+              >
                 <LogIn />
               </Button>
 

@@ -25,7 +25,7 @@ const Heading = ({
           {heading}
         </h2>
         <p
-          className={`max-w-lg text-sm pt-1 ${
+          className={`max-w-md text-sm pt-1 ${
             light === true
               ? "text-indigo-200"
               : "text-indigo-950/70 dark:text-indigo-200/80"

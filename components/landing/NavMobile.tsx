@@ -19,7 +19,7 @@ const NavMobile = () => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="bg-background/60 dark:bg-background/40 backdrop-blur-md border-l border-border/60 shadow-2xl shadow-indigo-200 dark:shadow-indigo-900">
         <SheetTitle className="sr-only">Menu</SheetTitle>
         <div className="p-8">
           <Link href="/welcome">
@@ -35,7 +35,7 @@ const NavMobile = () => {
               alt="Moneter logo"
               width={180}
               height={72}
-              className="h-4.5 w-auto cursor-pointer hidden dark:visible"
+              className="h-4.5 w-auto cursor-pointer hidden dark:block"
             />
           </Link>
 
@@ -53,7 +53,7 @@ const NavMobile = () => {
                 ))}
               </ul>
 
-              <Separator className="max-w-8! mx-auto" />
+              <Separator className="max-w-8! mx-auto dark:bg-neutral-500!" />
 
               <div className="flex flex-col gap-3">
                 <Link href="/sign-up">
@@ -70,7 +70,7 @@ const NavMobile = () => {
               </div>
             </nav>
 
-            <div className="flex flex-row gap-4 text-xs text-neutral-600 underline justify-center pt-8">
+            <div className="flex flex-row gap-4 text-xs text-neutral-600 dark:text-neutral-400 underline justify-center pt-8">
               <Link href="/privacy-policy">Privacy Policy</Link>
               <Link href="/terms-of-service">Terms of Service</Link>
             </div>

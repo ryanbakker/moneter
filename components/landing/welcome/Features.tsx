@@ -92,8 +92,7 @@ const Features = () => {
       <div className="section-container">
         <Heading
           heading="Features"
-          subheading="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet
-          reiciendis ut nam temporibus et."
+          subheading="Everything you need to take control of your finances, all in one secure platform."
         />
 
         <div className="flex flex-row items-center mt-8 justify-between">
@@ -158,7 +157,7 @@ const Features = () => {
                   width={800}
                   height={800}
                   alt={activeFeat.label}
-                  className="relative rounded-xl max-w-[90%] border border-indigo-200/50 dark:border-indigo-900 shadow-xl shadow-indigo-200/50 dark:shadow-indigo-700/60"
+                  className="relative rounded-xl max-w-[95%] border border-indigo-200/50 dark:border-indigo-900 shadow-xl shadow-indigo-200/50 dark:shadow-indigo-700/60"
                 />
               )}
             </div>
