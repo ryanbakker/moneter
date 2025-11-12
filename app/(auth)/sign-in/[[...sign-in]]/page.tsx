@@ -57,7 +57,43 @@ const SignInPage = () => {
           <SignIn.Step name="start">
             <span className="auth-subheads">Sign in with</span>
             <div className="grid grid-cols-3 gap-3 my-6">
-              {AUTH_CONNECTIONS.map((con) => (
+              <Clerk.Connection name="google" asChild>
+                <Button
+                  type="button"
+                  className="py-5 w-full bg-indigo-950/50 border border-indigo-900/60 hover:bg-indigo-950/80 sm:bg-indigo-100 sm:border-indigo-200 sm:hover:bg-indigo-200/60 sm:hover:border-indigo-300 sm:dark:bg-indigo-950/50 sm:dark:border-indigo-900/60 sm:dark:hover:bg-indigo-950/80 transition-all"
+                >
+                  <Clerk.Icon />
+                  <span className="text-indigo-50 sm:text-indigo-950 sm:dark:text-indigo-50 text-sm pl-0.5 hidden md:block">
+                    Google
+                  </span>
+                </Button>
+              </Clerk.Connection>
+
+              <Clerk.Connection name="apple" asChild>
+                <Button
+                  type="button"
+                  className="py-5 w-full bg-indigo-950/50 border border-indigo-900/60 hover:bg-indigo-950/80 sm:bg-indigo-100 sm:border-indigo-200 sm:hover:bg-indigo-200/60 sm:hover:border-indigo-300 sm:dark:bg-indigo-950/50 sm:dark:border-indigo-900/60 sm:dark:hover:bg-indigo-950/80 transition-all"
+                >
+                  <Clerk.Icon />
+                  <span className="text-indigo-50 sm:text-indigo-950 sm:dark:text-indigo-50 text-sm pl-0.5 hidden md:block">
+                    Apple
+                  </span>
+                </Button>
+              </Clerk.Connection>
+
+              <Clerk.Connection name="microsoft" asChild>
+                <Button
+                  type="button"
+                  className="py-5 w-full bg-indigo-950/50 border border-indigo-900/60 hover:bg-indigo-950/80 sm:bg-indigo-100 sm:border-indigo-200 sm:hover:bg-indigo-200/60 sm:hover:border-indigo-300 sm:dark:bg-indigo-950/50 sm:dark:border-indigo-900/60 sm:dark:hover:bg-indigo-950/80 transition-all"
+                >
+                  <Clerk.Icon />
+                  <span className="text-indigo-50 sm:text-indigo-950 sm:dark:text-indigo-50 text-sm pl-0.5 hidden md:block">
+                    Microsoft
+                  </span>
+                </Button>
+              </Clerk.Connection>
+
+              {/* {AUTH_CONNECTIONS.map((con) => (
                 <Clerk.Connection key={con.name} name={con.name} asChild>
                   <Button
                     type="button"
@@ -79,7 +115,7 @@ const SignInPage = () => {
                     </span>
                   </Button>
                 </Clerk.Connection>
-              ))}
+              ))} */}
             </div>
 
             <span className="auth-subheads">or</span>
