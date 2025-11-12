@@ -1,11 +1,11 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive relative overflow-hidden cursor-pointer",
   {
     variants: {
       variant: {
@@ -19,6 +19,10 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        "glass-primary":
+          "bg-gradient-to-r from-indigo-600/90 via-indigo-500/90 to-indigo-600/90 dark:from-indigo-500/80 dark:via-indigo-400/80 dark:to-indigo-500/80 backdrop-blur-lg text-white border border-indigo-400/50 dark:border-indigo-300/40 shadow-lg shadow-indigo-500/30 dark:shadow-indigo-400/20 hover:scale-[1.03] hover:shadow-xl hover:shadow-indigo-500/60 dark:hover:shadow-indigo-400/50 hover:border-indigo-300/80 dark:hover:border-indigo-200/70 hover:from-indigo-500/95 hover:via-indigo-400/95 hover:to-indigo-500/95 dark:hover:from-indigo-400/90 dark:hover:via-indigo-300/90 dark:hover:to-indigo-400/90 hover:-translate-y-0.5 duration-300 ease-out [&>svg]:relative [&>svg]:z-10",
+        "glass-secondary":
+          "bg-white/20 dark:bg-black/20 backdrop-blur-lg text-indigo-950 dark:text-indigo-100 border-2 border-indigo-300/60 dark:border-indigo-400/50 shadow-md shadow-indigo-200/30 dark:shadow-indigo-900/30 hover:scale-[1.03] hover:shadow-lg hover:shadow-indigo-300/60 dark:hover:shadow-indigo-500/50 hover:border-indigo-400/90 dark:hover:border-indigo-300/80 hover:bg-white/35 dark:hover:bg-black/35 hover:text-indigo-900 dark:hover:text-indigo-50 hover:-translate-y-0.5 duration-300 ease-out ring-0 hover:ring-2 hover:ring-indigo-300/30 dark:hover:ring-indigo-400/20 [&>svg]:relative [&>svg]:z-10",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -34,7 +38,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 function Button({
   className,
@@ -44,17 +48,20 @@ function Button({
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
+  const isGlassVariant =
+    variant === "glass-primary" || variant === "glass-secondary";
 
   return (
     <Comp
       data-slot="button"
+      data-glass-button={isGlassVariant ? variant : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };
