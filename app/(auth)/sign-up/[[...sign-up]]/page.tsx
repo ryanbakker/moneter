@@ -10,7 +10,7 @@ import { CornerDownLeft } from "lucide-react";
 
 const SignUpPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen sm:h-auto px-6 sm:p-20 sm:items-start sm:justify-start">
+    <div className="flex flex-col items-center justify-center h-screen sm:h-auto px-6 sm:py-20 sm:px-7 md:p-20 sm:items-start sm:justify-start">
       <div className="text-left flex flex-col items-start w-full">
         <h1 className="text-4xl sm:text-5xl pb-4 text-left font-medium text-indigo-50 sm:text-indigo-950 sm:dark:text-indigo-50 tracking-tighter">
           Create an account
