@@ -34,6 +34,7 @@ const Hero = () => {
               <Link href="/sign-up" className="w-full sm:w-auto">
                 <Button
                   size="lg"
+                  variant="glass-primary"
                   className="cursor-pointer flex flex-row items-center gap-1.5 w-full sm:w-auto"
                 >
                   <LogIn />
@@ -43,7 +44,7 @@ const Hero = () => {
               <Link href="/#features" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  variant="outline"
+                  variant="glass-secondary"
                   className="cursor-pointer flex flex-row items-center gap-1.5 w-full sm:w-auto"
                 >
                   <ChartNoAxesCombined />

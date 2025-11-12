@@ -112,6 +112,75 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Glass button shine effect */
+@keyframes buttonShine {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+/* Target glass button variants using data attribute */
+[data-glass-button="glass-primary"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-20deg);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  border-radius: inherit;
+}
+
+[data-glass-button="glass-secondary"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99, 102, 241, 0.3),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-20deg);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  border-radius: inherit;
+}
+
+[data-glass-button="glass-primary"]:hover::before,
+[data-glass-button="glass-secondary"]:hover::before {
+  animation: buttonShine 0.8s ease;
+}
+
+[data-glass-button="glass-primary"] > *,
+[data-glass-button="glass-secondary"] > * {
+  position: relative;
+  z-index: 2;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -159,4 +228,16 @@
     bottom: 0px;
     opacity: 1;
   }
+}
+
+.auth-input {
+  @apply rounded-md px-4 py-2 w-full bg-indigo-950/50 border border-indigo-900/60 hover:bg-indigo-950/80 text-indigo-50 placeholder:text-indigo-300/60 sm:bg-indigo-100 sm:border-indigo-200 sm:hover:bg-indigo-200/60 sm:hover:border-indigo-300 sm:text-indigo-950 sm:placeholder:text-indigo-900/60 sm:dark:bg-indigo-950/50 sm:dark:border-indigo-900/60 sm:dark:hover:bg-indigo-950/80 sm:dark:text-indigo-50 sm:dark:placeholder:text-indigo-300/60 transition-all focus:outline-none focus:ring-0 focus:border-indigo-700 sm:focus:border-indigo-400 sm:dark:focus:border-indigo-700;
+}
+
+.auth-error {
+  @apply text-rose-500 sm:text-rose-800 sm:dark:text-rose-500;
+}
+
+.auth-subheads {
+  @apply opacity-50 text-neutral-200 sm:text-indigo-900/60 sm:dark:text-indigo-300/60;
 }

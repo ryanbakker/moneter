@@ -8,6 +8,7 @@ import ThemeToggle from "./ThemeToggle";
 import { Button } from "../ui/button";
 import { LogIn } from "lucide-react";
 import NavDesktop from "./NavDesktop";
+import { SignOutButton } from "@clerk/nextjs";
 
 const NavMobile = dynamic(() => import("./NavMobile"), {
   ssr: false,
@@ -63,6 +64,7 @@ const Header = () => {
           <NavDesktop />
           <div className="flex flex-row items-center gap-4">
             <ThemeToggle />
+            <SignOutButton />
             <Link href="/sign-in" title="Sign in">
               <Button
                 variant="outline"
