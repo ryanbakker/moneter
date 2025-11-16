@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@clerk/themes/shadcn.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -197,6 +198,54 @@
 
   .section-container {
     @apply mx-auto max-w-7xl px-4 py-14 relative z-10;
+  }
+
+  .dashboard-container {
+    @apply w-full bg-[#fcfcfc] dark:bg-neutral-950 md:shadow-lg md:rounded-xl py-3 px-5 ;
+  }
+
+  /* Glassmorphism styles for dashboard sections */
+  .glass-section {
+    @apply backdrop-blur-xl border;
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(99, 102, 241, 0.12);
+    box-shadow: 
+      0 8px 32px 0 rgba(31, 38, 135, 0.12),
+      0 2px 8px 0 rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .dark .glass-section {
+    background: rgba(30, 30, 30, 0.85);
+    border-color: rgba(99, 102, 241, 0.18);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.4),
+      0 2px 8px 0 rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-header {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+  }
+
+  .dark .glass-header {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+  }
+
+  .glass-content {
+    border-color: rgba(99, 102, 241, 0.08);
+  }
+
+  .dark .glass-content {
+    border-color: rgba(99, 102, 241, 0.12);
+  }
+
+  .glass-footer {
+    border-top: 1px solid rgba(99, 102, 241, 0.1);
+  }
+
+  .dark .glass-footer {
+    border-top: 1px solid rgba(99, 102, 241, 0.15);
   }
 }
 
