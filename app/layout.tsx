@@ -27,6 +27,7 @@ export default function RootLayout({
       appearance={{
         theme: shadcn,
       }}
+      afterSignOutUrl="/welcome"
     >
       <html
         lang="en"

@@ -7,14 +7,15 @@ const Header = () => {
     <header className="dashboard-container glass-section glass-header">
       <div className="mx-auto w-full max-w-7xl flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-3">
-          <SidebarTrigger size="icon-lg" />
+          <SidebarTrigger size="icon-lg" title="Toggle sidebar" />
 
           <Separator
             orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
+            className="data-[orientation=vertical]:h-4"
           />
 
           {/* Breadcrumbs */}
+          <span className="text-sm text-muted-foreground">Dashboard</span>
         </div>
 
         <div>

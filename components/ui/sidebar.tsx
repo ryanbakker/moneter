@@ -273,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <div className="p-[7.2px] rounded-md transition-transform duration-300 bg-linear-to-br from-indigo-100 to-indigo-50 dark:from-indigo-950/50 dark:to-indigo-900/30 border-2 border-indigo-200 dark:border-indigo-800/50 shadow-md shadow-indigo-200 group-hover:scale-110">
+      <div className="p-[7.2px] rounded-md transition-all duration-300 bg-linear-to-br from-indigo-100 to-indigo-50 dark:from-indigo-950/50 dark:to-indigo-900/30 border border-indigo-300 dark:border-indigo-800/50 shadow-md shadow-indigo-100 dark:shadow-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-800">
         <PanelLeftIcon className="w-5! h-5! shrink-0 text-indigo-600 dark:text-indigo-400" />
       </div>
       <span className="sr-only">Toggle Sidebar</span>
