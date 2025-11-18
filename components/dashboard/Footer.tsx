@@ -6,7 +6,7 @@ import { Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="dashboard-container mt-3 glass-section glass-footer">
+    <footer className="dashboard-container -mt-0.5 md:mt-3 glass-section glass-footer">
       <div className="max-w-7xl flex flex-col md:flex-row items-center justify-between w-full mx-auto">
         <p className="text-sm flex flex-row items-center gap-2">
           © Moneter 2025 &nbsp; | &nbsp; Made with{" "}

@@ -15,8 +15,10 @@ export default async function DashboardLayout({
 
       <SidebarInset className="md:p-2 bg-transparent shadow-none!">
         <Header />
-        <div className="dashboard-container mt-3 glass-section glass-content">
-          <div className="w-full mx-auto max-w-7xl py-4 px-1.5">{children}</div>
+        <div className="dashboard-container -mt-0.5 md:mt-3 glass-section glass-content">
+          <div className="w-full mx-auto max-w-7xl py-4 px-0 md:px-1.5 min-h-[70vh]">
+            {children}
+          </div>
         </div>
         <Footer />
       </SidebarInset>

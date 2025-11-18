@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "../ui/button";
-import { LogIn } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import NavDesktop from "./NavDesktop";
-import { SignOutButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignOutButton } from "@clerk/nextjs";
 
 const NavMobile = dynamic(() => import("./NavMobile"), {
   ssr: false,
@@ -64,23 +64,45 @@ const Header = () => {
           <NavDesktop />
           <div className="flex flex-row items-center gap-4">
             <ThemeToggle />
-            <SignOutButton />
-            <Link href="/sign-in" title="Sign in">
-              <Button
-                variant="outline"
-                size="icon"
-                className="flex items-center justify-center sm:hidden pr-0.5"
-              >
-                <LogIn />
-              </Button>
 
-              <Button
-                variant="outline"
-                className="hidden sm:flex flex-row items-center gap-1.5 cursor-pointer"
-              >
-                Sign in <LogIn />
-              </Button>
-            </Link>
+            <SignedIn>
+              <SignOutButton>
+                <Button
+                  variant="glass-secondary"
+                  size="icon"
+                  className="flex items-center justify-center sm:hidden pr-0.5"
+                >
+                  <LogOut />
+                </Button>
+              </SignOutButton>
+              <SignOutButton>
+                <Button
+                  variant="glass-secondary"
+                  className="hidden sm:flex flex-row items-center gap-1.5 cursor-pointer"
+                >
+                  Sign out <LogOut />
+                </Button>
+              </SignOutButton>
+            </SignedIn>
+
+            <SignedOut>
+              <Link href="/sign-in" title="Sign in">
+                <Button
+                  variant="glass-primary"
+                  size="icon"
+                  className="flex items-center justify-center sm:hidden pr-0.5"
+                >
+                  <LogIn />
+                </Button>
+
+                <Button
+                  variant="glass-primary"
+                  className="hidden sm:flex flex-row items-center gap-1.5 cursor-pointer"
+                >
+                  Sign in <LogIn />
+                </Button>
+              </Link>
+            </SignedOut>
             <NavMobile />
           </div>
         </div>

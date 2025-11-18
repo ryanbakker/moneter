@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <SidebarHeader>
+    <SidebarHeader className="mt-3 ml-3">
       {user && (
         <SidebarMenuButton
           onClick={handleUserClick}

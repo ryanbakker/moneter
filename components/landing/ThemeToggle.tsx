@@ -66,7 +66,7 @@ const ThemeToggle = () => {
 
   return (
     <Button
-      variant="outline"
+      variant="glass-secondary"
       size="icon"
       aria-label={getThemeLabel()}
       title={getThemeLabel()}
