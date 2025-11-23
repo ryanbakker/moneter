@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import { SidebarTrigger } from "../ui/sidebar";
+import DashboardBreadcrumbs from "./DashboardBreadcrumbs";
 
 const Header = () => {
   return (
@@ -14,8 +15,7 @@ const Header = () => {
             className="data-[orientation=vertical]:h-4"
           />
 
-          {/* Breadcrumbs */}
-          <span className="text-sm text-muted-foreground">Dashboard</span>
+          <DashboardBreadcrumbs />
         </div>
 
         <div>

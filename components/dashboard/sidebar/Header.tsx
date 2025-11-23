@@ -3,7 +3,9 @@ import { SidebarHeader, SidebarMenuButton } from "@/components/ui/sidebar";
 import { useClerk, useUser } from "@clerk/nextjs";
 
 const Header = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, isLoaded } = useUser();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { openUserProfile, signOut } = useClerk();
 
   const handleUserClick = () => {
@@ -11,7 +13,7 @@ const Header = () => {
   };
 
   return (
-    <SidebarHeader className="mt-3 ml-3">
+    <SidebarHeader className="mt-3 ml-[2.5px]">
       {user && (
         <SidebarMenuButton
           onClick={handleUserClick}
