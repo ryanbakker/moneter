@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --breakpoint-xs: 475px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -202,6 +203,10 @@
 
   .dashboard-container {
     @apply w-full bg-[#fcfcfc] dark:bg-neutral-950 md:shadow-lg md:rounded-xl py-3 px-5 ;
+  }
+
+  .dashboard-header-container {
+    @apply flex flex-col xs:flex-row justify-between xs:items-end gap-5;
   }
 
   /* Glassmorphism styles for dashboard sections */
