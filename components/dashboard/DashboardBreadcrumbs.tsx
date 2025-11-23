@@ -37,9 +37,17 @@ const formatSegment = (segment: string): string => {
 const DashboardBreadcrumbs = () => {
   const pathname = usePathname();
 
-  // Don't show breadcrumbs on the root dashboard page
+  // Show just "Dashboard" text on the root dashboard page for consistent aesthetics
   if (pathname === "/") {
-    return null;
+    return (
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbPage>Dashboard</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    );
   }
 
   // Split pathname into segments
