@@ -2,7 +2,15 @@ import Footer from "@/components/dashboard/Footer";
 import Header from "@/components/dashboard/Header";
 import AppSidebar from "@/components/dashboard/sidebar/AppSidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Metadata } from "next";
 import { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Moneter | Dashboard",
+    template: "%s",
+  },
+};
 
 export default async function DashboardLayout({
   children,

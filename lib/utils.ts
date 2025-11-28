@@ -1,14 +1,14 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 /**
  * Shortens an email address by keeping the first few and last few characters
  * of the local part, replacing the middle with ***
- * 
+ *
  * @example
  * shortenEmail("your_email+clerk_test@example.com")
  * // Returns: "your***test@example.com"
@@ -19,7 +19,7 @@ export function shortenEmail(email: string): string {
   }
 
   const [localPart, domain] = email.split("@");
-  
+
   if (localPart.length <= 7) {
     // If the local part is short, just show first 3 chars + ***
     return `${localPart.slice(0, 3)}***@${domain}`;
@@ -28,6 +28,29 @@ export function shortenEmail(email: string): string {
   // Keep first 4 characters and last 4 characters of local part
   const firstPart = localPart.slice(0, 4);
   const lastPart = localPart.slice(-4);
-  
+
   return `${firstPart}***${lastPart}@${domain}`;
+}
+
+// == Format Date ==
+export const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+
+  const year = date.getFullYear().toString();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+// == Format Number ==
+export function formatToDollars(value: number): string {
+  if (isNaN(value)) return "$0.00";
+
+  return value.toLocaleString("en-NZ", {
+    style: "currency",
+    currency: "NZD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
