@@ -1,3 +1,5 @@
+export type TransactionType = "income" | "expense" | "transfer" | "other";
+
 export type Transaction = {
   _id: string;
   userId: string;
@@ -65,3 +67,11 @@ export type DeleteTransactionParams = {
 export type GetUserTransactionParams = {
   userId: string;
 };
+
+export interface TransactionDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  transaction: Transaction | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}

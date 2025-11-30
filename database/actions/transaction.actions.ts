@@ -108,7 +108,7 @@ export async function deleteTransaction({
     await connectToDatabase();
 
     const deletedTransaction = await Transaction.findByIdAndDelete(
-      transactionId
+      transactionId.toString()
     );
 
     if (deletedTransaction) revalidatePath("/transactions");

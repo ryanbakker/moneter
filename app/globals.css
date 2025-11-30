@@ -295,3 +295,23 @@
 .auth-subheads {
   @apply opacity-50 text-neutral-200 sm:text-indigo-900/60 sm:dark:text-indigo-300/60;
 }
+
+.dialog-content {
+  @apply backdrop-blur-xl bg-indigo-50/80 dark:bg-zinc-900/20 border border-indigo-700/40 dark:border-zinc-700/40 shadow-[0_8px_32px_rgb(0_0_0/0.3)] dark:shadow-[0_8px_32px_rgb(0_0_0/0.6)] rounded-xl transition-all
+}
+
+.dialog-title {
+  @apply text-indigo-950 font-bold text-xl;
+}
+
+.dialog-seperator {
+  @apply bg-indigo-800/10;
+}
+
+.dialog-field-label {
+  @apply text-xs font-semibold opacity-65;
+}
+
+.dialog-field-container {
+  @apply bg-indigo-50/50 rounded-md px-3 py-2 text-accent-foreground text-sm xl:text-base -mt-1.5;
+}
