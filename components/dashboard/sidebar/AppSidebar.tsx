@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { SIDEBAR_NAV_LINKS } from "@/constants";
 import {
   Sidebar,
@@ -30,6 +30,36 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const [isReportsOpen, setIsReportsOpen] = useState(
     path === "/reports" || path.startsWith("/reports/")
   );
+
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Load sidebar collapsed state
+    const stored = localStorage.getItem("sidebar-collapsed");
+
+    if (stored && sidebarRef.current) {
+      const isCollapsed = stored === "true";
+
+      sidebarRef.current.dataset.collapsible = isCollapsed ? "icon" : "default";
+    }
+  }, []);
+
+  useEffect(() => {
+    // Listen for Shadcn sidebar toggle
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail; // "icon" | "default"
+      const isCollapsed = detail === "icon";
+
+      localStorage.setItem("sidebar-collapsed", String(isCollapsed));
+
+      if (sidebarRef.current) {
+        sidebarRef.current.dataset.collapsible = detail;
+      }
+    };
+
+    window.addEventListener("sidebar:toggle", handler);
+    return () => window.removeEventListener("sidebar:toggle", handler);
+  }, []);
 
   const isReportsRoute = path === "/reports" || path.startsWith("/reports/");
 
@@ -66,7 +96,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   };
 
   return (
-    <Sidebar variant="inset" collapsible="icon" {...props}>
+    <Sidebar variant="inset" collapsible="icon" ref={sidebarRef} {...props}>
       <Header />
       <div className="relative overflow-hidden">
         <div className="h-5 w-[90%] absolute -bottom-2 left-0 bg-linear-to-b to-[#fafafa] dark:to-[#171717] z-20 to-50%" />

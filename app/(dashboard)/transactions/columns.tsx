@@ -13,17 +13,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import { CategoryBadge } from "@/components/dashboard/badges/CategoryBadge";
+import { TypeBadge } from "@/components/dashboard/badges/TypeBadge";
+import { AccountBadge } from "@/components/dashboard/badges/AccountBadge";
 
-// Action handlers interface
 interface ActionHandlers {
   onView: (transaction: Transaction) => void;
   onEdit: (transaction: Transaction) => void;
   onDelete: (transaction: Transaction) => void;
 }
 
-// Global event system for actions
 let globalActionHandlers: ActionHandlers | null = null;
-
 export const setGlobalActionHandlers = (handlers: ActionHandlers) => {
   globalActionHandlers = handlers;
 };
@@ -32,15 +32,17 @@ export const createColumns = (
   sortStates: Record<string, "asc" | "desc" | false>,
   onToggleSort: (columnId: string) => void
 ): ColumnDef<Transaction>[] => [
+  // SELECT
   {
     id: "select",
+    enableHiding: false,
     header: ({ table }) => (
       <Checkbox
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(v) => table.toggleAllPageRowsSelected(!!v)}
         aria-label="Select all"
         className="mr-1"
       />
@@ -48,14 +50,14 @@ export const createColumns = (
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(v) => row.toggleSelected(!!v)}
         aria-label="Select row"
         className="mr-1"
       />
     ),
-    enableSorting: false,
-    enableHiding: false,
   },
+
+  // DESCRIPTION (always shown)
   {
     accessorKey: "description",
     header: () => (
@@ -63,12 +65,27 @@ export const createColumns = (
         columnId="description"
         sortState={sortStates.description || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Description
       </SortableHeader>
     ),
-    enableHiding: true,
+    cell: ({ row }) => (
+      <span
+        className="
+          text-zinc-800 dark:text-zinc-200
+          text-xs sm:text-sm
+          max-w-[160px] sm:max-w-[240px] md:max-w-[320px]
+          truncate
+          block
+        "
+      >
+        {row.getValue("description")}
+      </span>
+    ),
   },
+
+  // AMOUNT (always shown)
   {
     accessorKey: "amount",
     header: () => (
@@ -76,154 +93,177 @@ export const createColumns = (
         columnId="amount"
         sortState={sortStates.amount || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Amount
       </SortableHeader>
     ),
     cell: ({ row }) => {
       const amount = row.getValue("amount") as number;
+      const type = row.original.type;
 
       const getAmountStyle = (amount: number, type: string) => {
-        if (type === "transfer") {
-          return "text-blue-600 dark:text-blue-400 font-semibold";
-        } else if (amount < 0) {
-          return "text-emerald-600! dark:text-emerald-400! font-semibold";
-        } else if (amount > 0) {
-          return "text-rose-600 dark:text-rose-400 font-semibold";
-        } else {
-          return "text-slate-600 dark:text-slate-400";
-        }
+        if (type === "transfer")
+          return "text-blue-700 dark:text-blue-300 font-semibold";
+        if (amount < 0) return "text-rose-700 dark:text-rose-300 font-semibold";
+        if (amount > 0)
+          return "text-emerald-700 dark:text-emerald-300 font-semibold";
+        return "text-zinc-700 dark:text-zinc-300";
       };
 
       return (
-        <span className={`${getAmountStyle}`}>{formatToDollars(amount)}</span>
+        <span className={`${getAmountStyle(amount, type)} text-xs sm:text-sm`}>
+          {formatToDollars(amount)}
+        </span>
       );
     },
   },
+
+  // DATE / hidden until sm
   {
     accessorKey: "date",
+    meta: {
+      className: "hidden xs:table-cell",
+    },
     header: () => (
       <SortableHeader
         columnId="date"
         sortState={sortStates.date || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Date
       </SortableHeader>
     ),
-    enableHiding: true,
-    cell: ({ row }) => {
-      const date = row.getValue("date") as string;
-      return formatDate(date);
-    },
+    cell: ({ row }) => (
+      <span className="text-zinc-700 dark:text-zinc-300 text-xs sm:text-sm">
+        {formatDate(row.getValue("date") as string)}
+      </span>
+    ),
   },
+
+  // ACCOUNT / hidden until md
   {
     accessorKey: "accountName",
+    meta: {
+      className: "hidden md:table-cell",
+    },
     header: () => (
       <SortableHeader
         columnId="accountName"
         sortState={sortStates.accountName || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Account
       </SortableHeader>
     ),
-    enableHiding: true,
+    cell: ({ row }) => <AccountBadge name={row.original.accountName} />,
   },
+
+  // CATEGORY / hidden until xl
   {
-    accessorKey: "category.name",
+    id: "category.name",
+    accessorFn: (row) => row.category.name,
+    meta: {
+      className: "hidden xl:table-cell",
+    },
     header: () => (
       <SortableHeader
         columnId="category.name"
         sortState={sortStates["category.name"] || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Category
       </SortableHeader>
     ),
-    enableHiding: true,
+    cell: ({ row }) => <CategoryBadge name={row.original.category.name} />,
   },
+
+  // TYPE / hidden until lg
   {
     accessorKey: "type",
+    meta: {
+      className: "hidden lg:table-cell",
+    },
     header: () => (
       <SortableHeader
         columnId="type"
         sortState={sortStates.type || false}
         onToggleSort={onToggleSort}
+        className="text-xs sm:text-sm"
       >
         Type
       </SortableHeader>
     ),
-    enableHiding: true,
-    cell: ({ row }) => {
-      const type = row.getValue("type") as string;
-      if (!type) return "Unknown";
-
-      const getTypeStyle = (type: string) => {
-        switch (type.toLowerCase()) {
-          case "income":
-            return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800";
-          case "expense":
-            return "bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400 border-rose-200 dark:border-rose-800";
-          case "transfer":
-            return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800";
-          default:
-            return "bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-400 border-slate-200 dark:border-slate-800";
-        }
-      };
-
-      return (
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getTypeStyle(
-            type
-          )}`}
-        >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
-        </span>
-      );
-    },
+    cell: ({ row }) => <TypeBadge type={row.getValue("type") as string} />,
   },
+
+  // ACTIONS
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const transaction = row.original;
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="cursor-pointer">
             <Button
               variant="ghost"
-              className="h-8 w-8 p-0"
-              data-action="button"
+              className="h-8 w-8 p-0 rounded-md hover:bg-zinc-50/40 dark:hover:bg-zinc-900/20 backdrop-blur-sm transition-all"
               onClick={(e) => e.stopPropagation()}
             >
-              <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="space-y-1">
+
+          <DropdownMenuContent
+            align="end"
+            className="
+      rounded-md backdrop-blur-md
+      bg-white/40 dark:bg-zinc-900/30
+      border border-neutral-200/80 dark:border-zinc-800/40
+      shadow-xl space-y-1 transition-all
+    "
+          >
+            {/* ---- VIEW ---- */}
             <DropdownMenuItem
-              className="cursor-pointer"
-              data-action="button"
-              onClick={() => globalActionHandlers?.onView(transaction)}
+              className="cursor-pointer hover:bg-zinc-100/40 dark:hover:bg-zinc-800/30 transition"
+              onClick={() => {
+                globalActionHandlers?.onView(transaction);
+              }}
             >
               <Eye className="mr-2 h-4 w-4" />
               View details
             </DropdownMenuItem>
+
+            {/* ---- EDIT ---- */}
             <DropdownMenuItem
-              className="cursor-pointer"
-              data-action="button"
-              onClick={() => globalActionHandlers?.onEdit(transaction)}
+              className="cursor-pointer hover:bg-zinc-100/40 dark:hover:bg-zinc-800/30 transition"
+              onClick={() => {
+                globalActionHandlers?.onEdit(transaction);
+              }}
             >
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </DropdownMenuItem>
+
+            {/* ---- DELETE ---- */}
             <DropdownMenuItem
-              className="dark:bg-red-900/40 bg-red-600/20 text-red-500 font-medium dark:hover:bg-red-700/40 dark:hover:text-red-500 cursor-pointer hover:bg-red-500/50! hover:text-red-500! transition-all"
-              data-action="button"
-              onClick={() => globalActionHandlers?.onDelete(transaction)}
+              className="
+        cursor-pointer
+        bg-red-50/40 text-red-700 dark:bg-red-900/20 dark:text-red-300
+        border border-red-200/40 dark:border-red-800/40
+        hover:bg-red-100/50 dark:hover:bg-red-900/30
+        font-medium transition
+      "
+              onClick={() => {
+                globalActionHandlers?.onDelete(transaction);
+              }}
             >
-              <Trash2 className="mr-2 h-4 w-4 text-red-500" />
+              <Trash2 className="mr-2 h-4 w-4 text-red-500 dark:text-red-300" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
